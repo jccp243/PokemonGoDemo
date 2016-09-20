@@ -1,5 +1,6 @@
 package com.juliocalderonuninorte.pokemongodemo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,9 +25,11 @@ import java.net.URLConnection;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = null;
-    private String[] lat = new String[10];
-    private String[] lng = new String[10];
-    private String[] pos = new String[10];
+    private static String[] lat = new String[10];
+    private static String[] lng = new String[10];
+    private static String[] pos = new String[10];
+    private MarkerDataSource data;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new GetData().execute();
+                //new GetData().execute();
                 Intent i = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(i);
             }
@@ -61,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
                 response=inputLine;
             }
             in.close();
+            try {
+                JSONArray latlng = new JSONArray(response);
+                for (int i=0; i<10;i++){
+                    JSONObject c = latlng.getJSONObject(i);
+                    lat[i] = c.getString("lt");
+                    lng[i] = c.getString("lng");
+                    pos[i] = lat[i]+" "+lng[i];
+                }
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
             return response;
 
         }catch (IOException e){
@@ -77,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (response != null){
                 try {
-
                     JSONArray latlng = new JSONArray(response);
                     for (int i=0; i<10;i++){
                         JSONObject c = latlng.getJSONObject(i);
