@@ -12,6 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,13 +25,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = null;
-    private static String[] lat = new String[10];
-    private static String[] lng = new String[10];
+    private static String[] id = new String[100];
+    private static String[] name = new String[100];
+    private static String[] type = new String[100];
+    private static String[] total = new String[100];
+    private static String[] HP = new String[100];
+    private static String[] attack = new String[100];
+    private static String[] defense = new String[100];
+    private static String[] spattack = new String[100];
+    private static String[] spdefense = new String[100];
+    private static String[] speed = new String[100];
+    private static String[] imgfront = new String[100];
+    private static String[] ev_id = new String[100];
+
     private static String[] pos = new String[10];
+    private List<Pokemones> pokemones;
     private MarkerDataSource data;
     Context context;
 
@@ -49,66 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    protected static String getData(){
-        Log.d(TAG,"GET");
-        String response = null;
-        try {
-            URL url = null;
-            url = new URL("http://190.144.171.172/function3.php?lat=11.0199414&lng=-74.8487154");
-            URLConnection yc = url.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                response=inputLine;
-            }
-            in.close();
-            try {
-                JSONArray latlng = new JSONArray(response);
-                for (int i=0; i<10;i++){
-                    JSONObject c = latlng.getJSONObject(i);
-                    lat[i] = c.getString("lt");
-                    lng[i] = c.getString("lng");
-                    pos[i] = lat[i]+" "+lng[i];
-                }
-
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-            return response;
-
-        }catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private class GetData extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String response = getData();
-
-            if (response != null){
-                try {
-                    JSONArray latlng = new JSONArray(response);
-                    for (int i=0; i<10;i++){
-                        JSONObject c = latlng.getJSONObject(i);
-                        lat[i] = c.getString("lt");
-                        lng[i] = c.getString("lng");
-                        pos[i] = lat[i]+" "+lng[i];
-                    }
-
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }else{
-
-            }
-
-            return null;
-        }
     }
 
 }

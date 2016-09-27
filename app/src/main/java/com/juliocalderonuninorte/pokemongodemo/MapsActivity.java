@@ -37,6 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static String[] lat;
     private static String[] lng;
     private static String[] pos;
+
     private List<Posiciones> posiciones;
     private ArrayList<Integer> timeNames = new ArrayList<Integer>();
     Context context = this;
@@ -61,29 +62,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         timeNames.add(R.drawable.voltorb);
         timeNames.add(R.drawable.wigglytuff);
         new GetData().execute();
-
-
-
-        // LO QUE APARECE EN COMENTARIO ES CUANDO YA SE TIENE LA BASE DE DATOS
-        /*data = new MarkerDataSource(context);
-        try {
-            data.open();
-        } catch (Exception e){
-
-        }
-
-        data.close();
-*/
-        /*List<MyMarkerObj> m = data.getMyMarkers();
-
-            //ESTE PARA RECORRE LA BASE DE DATOS CON LAS SUPUESTAS POSICIONES QUE ESTEN EN LA BASE
-            DE DATOS Y LOS MARCA EN EL MAPA CON LA INFORMACION ASOCIADA (SNIPPET)
-
-        for (int i=0; i<m.size(); i++){
-            String[] slatlng = m.get(i).getPosition().split(" ");
-            LatLng lat = new LatLng(Double.valueOf(slatlng[0]), Double.valueOf(slatlng[1]));
-            mMap.addMarker(new MarkerOptions().title(m.get(i).getTitle()).snippet(m.get(i).getSnippet()).position(lat));
-        }*/
 
     }
 
@@ -144,6 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected Void doInBackground(Void... voids) {
             String response = getData();
+            //String responseP = getDataPokemones();
             posiciones = new ArrayList<Posiciones>();
             if (response != null){
                 try {
@@ -176,5 +155,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
+
+
 
 }
